@@ -1,0 +1,189 @@
+body {
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+.email-form, .whatsapp-form {
+    background: linear-gradient(to bottom right, #ffffff, #f8fbff);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 102, 204, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.email-form:hover, .whatsapp-form:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(to bottom right, #ffffff, #f0f7ff);
+}
+
+.whatsapp-form {
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.1);
+}
+
+.form-title {
+    background: linear-gradient(45deg, #0066cc, #0099ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.whatsapp-title {
+    background: linear-gradient(45deg, #25d366, #128C7E);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 12px;
+    transition: all 0.3s ease;
+    background: linear-gradient(to bottom, #ffffff, #fafbfc);
+}
+
+.form-control:focus {
+    border-color: #0066cc;
+    box-shadow: 0 0 0 0.25rem rgba(0, 102, 204, 0.1);
+    background: linear-gradient(to bottom, #ffffff, #f8fbff);
+}
+
+.whatsapp-form .form-control:focus {
+    border-color: #25d366;
+    box-shadow: 0 0 0 0.25rem rgba(37, 211, 102, 0.1);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #0066cc, #0099ff);
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #0052a3, #0080ff);
+    transform: translateY(-2px);
+}
+
+.btn-whatsapp {
+    background: linear-gradient(45deg, #25d366, #128C7E);
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.btn-whatsapp:hover {
+    background: linear-gradient(45deg, #1fb959, #0e7265);
+    transform: translateY(-2px);
+}
+
+.file-upload-wrapper {
+    position: relative;
+    margin-top: 10px;
+}
+
+.file-name {
+    margin-top: 8px;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.success-message {
+    display: none;
+    background: linear-gradient(to right, #198754, #20a36a);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+/* Enhanced file input styling */
+input[type="file"] {
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    padding-left: 16px;
+    background: linear-gradient(to bottom, #ffffff, #fafbfc);
+}
+
+input[type="file"]::file-selector-button {
+    border: none;
+    background: linear-gradient(45deg, #0066cc, #0099ff);
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 16px;
+    margin-left: -16px;
+    font-weight: 500;
+}
+
+.whatsapp-form input[type="file"]::file-selector-button {
+    background: linear-gradient(45deg, #25d366, #128C7E);
+}
+
+.whatsapp-form input[type="file"]::file-selector-button:hover {
+    background: linear-gradient(45deg, #1fb959, #0e7265);
+}
+
+input[type="file"]:hover {
+    border-color: #0066cc;
+    background: linear-gradient(to bottom, #ffffff, #f8fbff);
+}
+
+.whatsapp-form input[type="file"]:hover {
+    border-color: #25d366;
+}
+
+.form-text {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin-top: 6px;
+    background: linear-gradient(45deg, #6c757d, #495057);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Animation for form elements */
+.email-form, .whatsapp-form {
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-control {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

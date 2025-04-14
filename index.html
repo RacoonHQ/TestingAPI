@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Email & WhatsApp</title>
+
+    <!-- Stylesheets -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script src="popup.js"></script>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <!-- Email Form Section -->
+                <div class="email-form p-4 p-md-5 mb-5">
+                    <h2 class="text-center mb-4 form-title">Send Email</h2>
+                    <form id="emailForm">
+                        <!-- Name Input -->
+                        <div class="mb-4">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+                        </div>
+                        <!-- Recipient Email Input -->
+                        <div class="mb-4">
+                            <label for="to_email" class="form-label">Recipient Email</label>
+                            <input type="email" class="form-control" id="to_email" name="to_email" placeholder="Enter recipient email" required>
+                        </div>
+                        <!-- Subject Input -->
+                        <div class="mb-4">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter your subject" required>
+                        </div>
+                        <!-- Message Input -->
+                        <div class="mb-4">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <!-- Attachment Input -->
+                        <div class="mb-4">
+                            <label for="attachment" class="form-label">Attachment</label>
+                            <input type="file" class="form-control" id="attachment" name="attachment">
+                            <div class="form-text">Supported files: images, audio, PDF, etc.</div>
+                        </div>
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Send Email</button>
+                        </div>
+                    </form>
+                    <!-- Success Message -->
+                    <div id="successMessage" class="alert alert-success text-center mt-4" style="display: none;">
+                        Pesan Anda sudah kami terima. Terima kasih!
+                    </div>        
+                </div>
+
+                <!-- WhatsApp Form Section -->
+                <div class="whatsapp-form p-4 p-md-5">
+                    <h2 class="text-center mb-4 form-title whatsapp-title">Send WhatsApp</h2>
+                    <form id="whatsappForm">
+                        <!-- Phone Number Input -->
+                        <div class="mb-4">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" placeholder="Example: +628123456789" required>
+                        </div>
+                        <!-- WhatsApp Message Input -->
+                        <div class="mb-4">
+                            <label for="waMessage" class="form-label">Message</label>
+                            <textarea class="form-control" id="waMessage" rows="5" required></textarea>
+                        </div>
+                        <!-- WhatsApp Attachment Input -->
+                        <div class="mb-4">
+                            <label for="waAttachment" class="form-label">Attachment</label>
+                            <input type="file" class="form-control" id="waAttachment" name="attachment">
+                            <div class="form-text">Supported files: images only (jpg, png)</div>
+                        </div>
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-whatsapp btn-lg">Send WhatsApp</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="popup.js"></script>
+    <!-- EMAIL JS SCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        // EmailJS Initialization
+        console.log("EmailJS script loaded."); // Debugging log
+        emailjs.init("6Wr62FmMD_SBrKdNa"); // Ganti dengan public key dari EmailJS
+        console.log("EmailJS initialized."); // Debugging log
+
+        // Email Form Submission
+        document.getElementById("emailForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Mencegah reload halaman
+            console.log("Form submitted."); // Debugging log
+
+            const serviceID = "service_4gv6nsd"; // Ganti dengan Service ID Anda
+            const templateID = "template_xvft9m9"; // Ganti dengan Template ID Anda
+
+            emailjs.sendForm(serviceID, templateID, this)
+                .then(() => {
+                    console.log("Email sent successfully."); // Debugging log
+                    document.getElementById("emailForm").reset();
+                    showPopup("✅ Proses berhasil. Silakan cek email kamu untuk info selanjutnya."); // Show success popup
+                }, (error) => {
+                    console.error("FAILED...", error); // Debugging log
+                    showPopup("❗ Terjadi error. Pastikan semua data telah diisi dengan benar."); // Show error popup
+                });
+        });
+    </script>
+
+    <!-- WHATSAPP SCRIPT -->
+    <script>
+        // WhatsApp Form Submission
+        document.getElementById("whatsappForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Mencegah reload halaman
+            console.log("WhatsApp form submitted."); // Debugging log
+
+            const phone = document.getElementById("phone").value;
+            const message = document.getElementById("waMessage").value;
+            const attachment = document.getElementById("waAttachment").files[0];
+
+            if (attachment) {
+                showPopup("WhatsApp Web tidak mendukung pengiriman file secara langsung. Silakan unggah file secara manual setelah membuka WhatsApp.");
+            }
+
+            // Format URL untuk WhatsApp API
+            const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+            // Buka URL di tab baru
+            window.open(whatsappURL, "_blank");
+
+            showPopup("✅ Pesan WhatsApp berhasil terkirim!. Silahkan cek pesan kamu untuk info selanjutnya."); // Show success popup
+        });
+    </script>
+</body>
+</html>
