@@ -95,15 +95,26 @@
 </script>
 
 <script>
+    function isMobileDevice() {
+        return /android|iphone|ipad|iPod/i.test(navigator.userAgent.toLowerCase());
+    }
+
     document.getElementById("whatsappForm").addEventListener("submit", function (event) {
         event.preventDefault();
 
-        const phone = document.getElementById("phone").value;
+        const phone = document.getElementById("phone").value.trim();
         const message = document.getElementById("waMessage").value;
 
-        const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        let whatsappURL = "";
+
+        if (isMobileDevice()) {
+            whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        } else {
+            whatsappURL = `https://web.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+        }
+
         window.open(whatsappURL, "_blank");
-        showPopup("✅ Pesan WhatsApp berhasil terkirim!. Silahkan cek pesan kamu untuk info selanjutnya.");
+        showPopup("✅ Pesan WhatsApp berhasil terkirim! Silakan cek aplikasi atau browser kamu.");
     });
 </script>
 
