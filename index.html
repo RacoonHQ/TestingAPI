@@ -1,60 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Metadata dasar untuk dokumen HTML -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Email & WhatsApp</title>
+    
+    <!-- Link ke Bootstrap CSS untuk styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Link ke Google Fonts untuk font Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Link ke file CSS eksternal -->
     <link href="styles.css" rel="stylesheet">
 </head>
 <body>
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
+            <!-- Form untuk mengirim email -->
             <div class="email-form p-4 p-md-5 mb-5">
                 <h2 class="text-center mb-4 form-title">Send Email</h2>
                 <form id="emailForm">
+                    <!-- Input untuk nama pengirim -->
                     <div class="mb-4">
                         <label for="name" class="form-label">Your Name</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Tulis nama kamu di sini" required>
                     </div> 
+                    <!-- Input untuk email pengirim -->
                     <div class="mb-4">
                         <label for="email_pengirim" class="form-label">Email Pengirim</label>
                         <input type="email" class="form-control" id="email_pengirim" name="email_pengirim" placeholder="Tulis email kamu di sini" required>
                     </div>
+                    <!-- Input untuk email tujuan -->
                     <div class="mb-4">
                         <label for="to_email" class="form-label">Email Tujuan</label>
                         <input type="email" class="form-control" id="to_email" name="to_email" placeholder="Tulis email tujuan di sini" required>
                     </div>
+                    <!-- Input untuk subjek email -->
                     <div class="mb-4">
                         <label for="subject" class="form-label">Subject</label>
                         <input type="text" class="form-control" id="subject" name="subject" placeholder="Tulis subjek email di sini" required>
                     </div>
+                    <!-- Input untuk pesan email -->
                     <div class="mb-4">
                         <label for="message" class="form-label">Message</label>
                         <textarea class="form-control" id="message" name="message" rows="5" placeholder="Tulis pesan kamu di sini" required></textarea>
                     </div>
+                    <!-- Tombol untuk mengirim email -->
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary btn-lg">Send Email</button>
                     </div>
                 </form>
+                <!-- Pesan sukses setelah email terkirim -->
                 <div id="successMessage" class="alert alert-success text-center mt-4" style="display: none;">
                     Pesan Anda sudah kami terima. Terima kasih!
                 </div>
             </div>
             
+            <!-- Form untuk mengirim pesan WhatsApp -->
             <div class="whatsapp-form p-4 p-md-5">
                 <h2 class="text-center mb-4 form-title whatsapp-title">Send WhatsApp</h2>
                 <form id="whatsappForm">
+                    <!-- Input untuk nomor telepon -->
                     <div class="mb-4">
                         <label for="phone" class="form-label">Phone Number</label>
                         <input type="tel" class="form-control" id="phone" placeholder="Masukkan nomor telepon" required>
                     </div>
+                    <!-- Input untuk pesan WhatsApp -->
                     <div class="mb-4">
                         <label for="waMessage" class="form-label">Message</label>
                         <textarea class="form-control" id="waMessage" rows="5" placeholder="Tulis pesan WhatsApp di sini" required></textarea>
                     </div>
+                    <!-- Tombol untuk mengirim pesan WhatsApp -->
                     <div class="d-grid">
                         <button type="submit" class="btn btn-whatsapp btn-lg">Send WhatsApp</button>
                     </div>
@@ -64,19 +83,25 @@
     </div>
 </div>
 
+<!-- Script untuk library EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
+    // Inisialisasi EmailJS dengan user ID
     emailjs.init("6Wr62FmMD_SBrKdNa");
 
+    // Event listener untuk form email
     document.getElementById("emailForm").addEventListener("submit", async function (event) {
-        event.preventDefault();
+        event.preventDefault(); // Mencegah reload halaman
 
+        // ID layanan dan template EmailJS
         const serviceID = "service_4gv6nsd";
         const templateID = "template_xvft9m9";
 
+        // Mengambil data dari form
         const form = document.getElementById("emailForm");
         const formData = new FormData(form);
 
+        // Mengirim email menggunakan EmailJS
         emailjs.send(serviceID, templateID, {
             name: formData.get("name"),
             from_email: formData.get("email_pengirim"),
@@ -85,9 +110,11 @@
             message: formData.get("message")
         })
         .then(() => {
+            // Reset form dan tampilkan pesan sukses
             document.getElementById("emailForm").reset();
             showPopup("✅ Proses berhasil. Silakan cek email kamu untuk info selanjutnya.");
         }, (error) => {
+            // Tampilkan pesan error jika gagal
             console.error("FAILED...", error);
             showPopup("❗ Terjadi error. Pastikan semua data telah diisi dengan benar.");
         });
@@ -95,30 +122,37 @@
 </script>
 
 <script>
+    // Fungsi untuk memeriksa apakah perangkat adalah perangkat mobile
     function isMobileDevice() {
         return /android|iphone|ipad|iPod/i.test(navigator.userAgent.toLowerCase());
     }
 
+    // Event listener untuk form WhatsApp
     document.getElementById("whatsappForm").addEventListener("submit", function (event) {
-        event.preventDefault();
+        event.preventDefault(); // Mencegah reload halaman
 
+        // Mengambil nomor telepon dan pesan dari form
         const phone = document.getElementById("phone").value.trim();
         const message = document.getElementById("waMessage").value;
 
         let whatsappURL = "";
 
+        // Membuat URL WhatsApp berdasarkan perangkat
         if (isMobileDevice()) {
             whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
         } else {
             whatsappURL = `https://web.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
         }
 
+        // Membuka URL WhatsApp di tab baru
         window.open(whatsappURL, "_blank");
         showPopup("✅ Pesan WhatsApp berhasil terkirim! Silakan cek aplikasi atau browser kamu.");
     });
 </script>
 
+<!-- Script untuk Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Script untuk popup -->
 <script src="popup.js"></script>
 
 </body>
