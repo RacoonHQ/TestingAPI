@@ -14,7 +14,8 @@ A simple web application that allows users to send emails and WhatsApp messages 
 
 You can see the live demo of this project here: [Demo Link](https://racoonhq.github.io/TestingAPI/)
 
-![Preview](https://raw.githubusercontent.com/RacoonHQ/TestingApi/main/preview.png)
+![{F767E562-625A-4CF1-B0B9-56D8638BB0DA}](https://github.com/user-attachments/assets/b094831f-be70-4b9c-9af0-04c1f40a367a)
+
 
 ## Technologies Used
 
