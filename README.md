@@ -59,8 +59,5 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Contributors
 
-- Sayyid Abdullah Azzam (2023230021)
+- Sayyid Abdullah Azzam (2023230021) Teknologi Informasi
 
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
